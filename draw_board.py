@@ -38,12 +38,19 @@ screen = pygame.display.set_mode((window_width, window_height))
 pygame.display.set_caption(window_title)
 clock = pygame.time.Clock()
 
+
+def update_state():
+    snek.check_eat(food)
+    snek.check_dead()
+
+
 def draw():
     screen.fill(window_bg_color)
     draw_board(board, screen)
     draw_food(food, screen)
     draw_snek(snek, screen)
     pygame.display.update()
+
 
 while True:
     # Handle input
@@ -65,5 +72,6 @@ while True:
             if event.key == pygame.K_SPACE:
                 snek.move()
 
+    update_state()
     draw()
     clock.tick(60)
