@@ -13,7 +13,7 @@ tile_width, tile_height = (20, 20)
 
 board = Grid(10, 5)
 food = Food((10, 5))
-snek = Snek((4, 2))
+snek = Snek((4, 2), board.size)
 
 def draw_board(grid: Grid, surface: pygame.Surface):
     """Draw board where snek is."""

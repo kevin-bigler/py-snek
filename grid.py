@@ -32,3 +32,7 @@ class Grid:
         for y in range(self.height):
             for x in range(self.width):
                 yield self.arr[y][x]
+
+    @property
+    def size(self):
+        return (self.width, self.height)
