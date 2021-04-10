@@ -1,5 +1,7 @@
 import pygame, sys
 
+pygame.init()
+
 from rect_with_border import create_rect_with_border
 from grid import Grid
 from snek import Snek
@@ -14,6 +16,9 @@ tile_width, tile_height = (20, 20)
 board = Grid(10, 5)
 food = Food((10, 5))
 snek = Snek((4, 2), board.size)
+
+MOVE_SNEK = pygame.USEREVENT
+pygame.time.set_timer(MOVE_SNEK, 300)
 
 def draw_board(grid: Grid, surface: pygame.Surface):
     """Draw board where snek is."""
@@ -69,8 +74,13 @@ while True:
             if event.key == pygame.K_RIGHT:
                 snek.turn_right()
             
-            if event.key == pygame.K_SPACE:
-                snek.move()
+            ## manual moving with space
+            # if event.key == pygame.K_SPACE:
+            #     snek.move()
+        
+        # timer moving snek
+        if event.type == MOVE_SNEK:
+            snek.move()
 
     update_state()
     draw()

@@ -5,7 +5,6 @@ import random
 
 class Snek:
     def __init__(self, start_pos = (0, 0), bounds = (1, 1)):
-        print('snek - bounds:', bounds)
         self.reset(start_pos)
         self.bounds = Vector2(bounds)
         self.growing = False
