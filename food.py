@@ -13,6 +13,3 @@ class Food:
         rand_y = random.randrange(self.pos_range.y)
         self.position = Vector2(rand_x, rand_y)
     
-    @property
-    def position(self):
-        return self.position
