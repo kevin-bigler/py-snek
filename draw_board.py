@@ -7,15 +7,16 @@ from grid import Grid
 from snek import Snek
 from food import Food
 
-window_width, window_height = 400, 200
-window_title = 'py sneky snek'
-window_bg_color = pygame.Color('white')
 
 tile_width, tile_height = (20, 20)
 
-board = Grid(10, 5)
+board = Grid(20, 20)
 food = Food((10, 5))
 snek = Snek((4, 2), board.size)
+
+window_title = 'py sneky snek'
+window_bg_color = pygame.Color('white')
+window_width, window_height = board.width * tile_width, board.height * tile_height
 
 MOVE_SNEK = pygame.USEREVENT
 pygame.time.set_timer(MOVE_SNEK, 300)
@@ -24,7 +25,7 @@ def draw_board(grid: Grid, surface: pygame.Surface):
     """Draw board where snek is."""
     for val, (x, y) in grid:
         color = pygame.Color('pink')
-        tile = create_rect_with_border(tile_width, tile_height, fill_color=color)
+        tile = create_rect_with_border(tile_width, tile_height, fill_color=color, border_width=0)
         surface.blit(tile, (x * tile_width, y * tile_height))
 
 

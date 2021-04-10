@@ -15,25 +15,22 @@ class Snek:
         self.body = [Vector2(pos), Vector2(pos)]
         self.direction = Vector2(0, 0)
     
+    def try_turn_to(self, x, y):
+        new_dir = Vector2(x, y)
+        if self.body[0] + new_dir != self.body[1]:
+            self.direction = new_dir
+
     def turn_up(self):
-        if self.direction.y == 1:
-            return
-        self.direction = Vector2(0, -1)
+        self.try_turn_to(0, -1)
     
     def turn_down(self):
-        if self.direction.y == -1:
-            return
-        self.direction = Vector2(0, 1)
+        self.try_turn_to(0, 1)
     
     def turn_left(self):
-        if self.direction.x == 1:
-            return
-        self.direction = Vector2(-1, 0)
+        self.try_turn_to(-1, 0)
     
     def turn_right(self):
-        if self.direction.x == -1:
-            return
-        self.direction = Vector2(1, 0)
+        self.try_turn_to(1, 0)
 
     def move(self):
         new_block = self.body[0] + self.direction
