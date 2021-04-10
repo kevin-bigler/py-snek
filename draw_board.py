@@ -11,7 +11,8 @@ from food import Food
 tile_width, tile_height = (20, 20)
 
 board = Grid(20, 20)
-food = Food((10, 5))
+food = Food(board.size)
+food.position = pygame.math.Vector2(19, 19)
 snek = Snek((4, 2), board.size)
 
 window_title = 'py sneky snek'
@@ -36,7 +37,12 @@ def draw_food(food: Food, surface: pygame.Surface):
 
 def draw_snek(snek: Snek, surface: pygame.Surface):
     for block in snek:
-        tile = create_rect_with_border(tile_width, tile_height, fill_color=pygame.Color('green'))
+        if block == snek.body[0]:
+            color = pygame.Color('limegreen')
+        else:
+            color = pygame.Color('lightgreen')
+        
+        tile = create_rect_with_border(tile_width, tile_height, fill_color=color)
         surface.blit(tile, (block.x * tile_width, block.y * tile_height))
 
 
@@ -76,12 +82,12 @@ while True:
                 snek.turn_right()
             
             ## manual moving with space
-            # if event.key == pygame.K_SPACE:
-            #     snek.move()
+            if event.key == pygame.K_SPACE:
+                snek.move()
         
         # timer moving snek
-        if event.type == MOVE_SNEK:
-            snek.move()
+        # if event.type == MOVE_SNEK:
+        #     snek.move()
 
     update_state()
     draw()

@@ -1,17 +1,17 @@
 from pygame.math import Vector2
 from food import Food
-import random
+import random, json
 
 
 class Snek:
     def __init__(self, start_pos = (0, 0), bounds = (1, 1)):
-        self.reset(start_pos)
         self.bounds = Vector2(bounds)
         self.growing = False
+        self.reset(start_pos)
     
     def reset(self, pos = None):
         if pos is None:
-            pos = Vector2(random.randrange(self.bounds.x), random.randrange(self.bounds.y))
+            pos = Vector2(int(random.randrange(self.bounds.x)), int(random.randrange(self.bounds.y)))
         self.body = [Vector2(pos), Vector2(pos)]
         self.direction = Vector2(0, 0)
     
@@ -35,7 +35,6 @@ class Snek:
     def move(self):
         new_block = self.body[0] + self.direction
 
-        # body_copy = self.body[:] if self.growing else self.body[:-1]
         if self.growing:
             body_copy = self.body[:]
             self.growing = False
@@ -44,6 +43,7 @@ class Snek:
         
         body_copy.insert(0, new_block)
         self.body = body_copy
+        print('snek:', self)
     
     def __iter__(self):
         for block in self.body:
@@ -52,7 +52,10 @@ class Snek:
     def check_eat(self, food: Food):
         if self.body[0] == food.position:
             self.grow()
-            food.randomize()
+            while True:
+                food.randomize()
+                if food.position not in self.body:
+                    break
 
     def grow(self):
         self.growing = True
@@ -74,3 +77,17 @@ class Snek:
         # self.reset(self.body[0:1])
         self.growing = False
         self.reset()
+
+    def export_json(self):
+        """Export body in a JSON-compatible format"""
+        body_arr = [[int(block.x), int(block.y)] for block in self.body]
+        print('snek body exported to data')
+        return {'body': body_arr}
+    
+    def load_from_json(self, data):
+        """Set body values based on JSON-compatible input"""
+        self.body = [Vector2(block[0], block[1]) for block in data['body']]
+        print('snek body imported from data')
+    
+    def __repr__(self):
+        return json.dumps(self.export_json())
