@@ -12,10 +12,3 @@ def create_rect_with_border(width, height, fill_color, border_width=1, border_co
     pygame.draw.rect(surface, border_color, rect, border_width)
 
     return surface
-
-
-def draw_rect_test(surface):
-    width, height = 20, 40
-    box = create_rect_with_border(width, height, pygame.Color('red'))
-    surface.blit(box, (5, 5))
-    surface.blit(box, (50, 50))
